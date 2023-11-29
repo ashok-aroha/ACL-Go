@@ -1,0 +1,5 @@
+Step 1: go mod init github.com/ashok-aroha/ACL-Go 
+---------------------------------------------------
+go: creating new go.mod: module github.com/ashok-aroha/ACL-Go
+go: to add module requirements and sums:
+        go mod tidy
