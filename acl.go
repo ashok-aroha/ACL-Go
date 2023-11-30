@@ -18,7 +18,7 @@ func RestrictEndpoints(next http.Handler) http.Handler {
 
 // Function to check if an endpoint is restricted
 func isRestrictedEndpoint(endpoint string) bool {
-	restrictedEndpoints := []string{"/restricted", "/admin"}
+	restrictedEndpoints := []string{"/restricted"}
 
 	for _, e := range restrictedEndpoints {
 		if e == endpoint {
