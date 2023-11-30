@@ -3,7 +3,7 @@ package acl
 import "net/http"
 
 // Middleware function to restrict access to certain endpoints
-func restrictEndpoints(next http.Handler) http.Handler {
+func RestrictEndpoints(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Check if the request is to a restricted endpoint
 		if isRestrictedEndpoint(r.URL.Path) {
