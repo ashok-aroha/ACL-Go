@@ -1,1 +1,0 @@
-This is Go lagng package for the ACL

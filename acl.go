@@ -1,8 +1,6 @@
-package main
+package acl
 
-import (
-	"net/http"
-)
+import "net/http"
 
 // Middleware function to restrict access to certain endpoints
 func restrictEndpoints(next http.Handler) http.Handler {
