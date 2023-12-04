@@ -1,9 +1,5 @@
 package acl
 
-import (
-	"fmt"
-)
-
 type User struct {
 	Email      string `json:"email"`
 	Password   string `json:"password"`
@@ -40,14 +36,14 @@ func (u *User) ToMap() map[string]interface{} {
 }
 
 type UserRole struct {
-	UserID     int    `json:"user_id"`
+	UserID     int    `json:"user_id,omitempty"`
 	UserRoleID int    `json:"id,omitempty"`
 	UserRoles  []int  `json:"user_roles,omitempty"`
 	StatusCode int    `json:"status_code,omitempty"`
 	Message    string `json:"message,omitempty"`
 }
 
-func (ur *UserRole) GetMap() map[string]interface{} {
+func (ur *UserRole) ToMap() map[string]interface{} {
 	userRoleMap := map[string]interface{}{
 		"user_id":    ur.UserID,
 		"user_roles": ur.UserRoles,
@@ -74,7 +70,7 @@ type Role struct {
 	Message     string `json:"message,omitempty"`
 }
 
-func (r *Role) GetMap() map[string]interface{} {
+func (r *Role) ToMap() map[string]interface{} {
 	roleMap := map[string]interface{}{
 		"name":        r.Name,
 		"description": r.Description,
@@ -94,61 +90,81 @@ func (r *Role) GetMap() map[string]interface{} {
 }
 
 type RolePermission struct {
-	ID              int    `json:"id,omitempty"`
-	RoleID          int    `json:"role_id"`
-	RolePermissions []int  `json:"role_permissions"`
-	StatusCode      int    `json:"status_code,omitempty"`
-	Message         string `json:"message,omitempty"`
+	RolePermissionsID int    `json:"id,omitempty"`
+	RoleID            int    `json:"role_id,omitempty"`
+	RolePermissions   []int  `json:"role_permissions,omitempty"`
+	StatusCode        int    `json:"status_code,omitempty"`
+	Message           string `json:"message,omitempty"`
 }
 
-func (rp *RolePermission) GetMap() map[string]interface{} {
-	rolePermissionMap := map[string]interface{}{
+func (rp *RolePermission) ToMap() map[string]interface{} {
+	rolePermissionsMap := map[string]interface{}{
 		"role_id":          rp.RoleID,
 		"role_permissions": rp.RolePermissions,
 	}
 
-	if rp.ID != 0 {
-		rolePermissionMap["id"] = rp.ID
+	if rp.RolePermissionsID != 0 {
+		rolePermissionsMap["id"] = rp.RolePermissionsID
 	}
 	if rp.StatusCode != 0 {
-		rolePermissionMap["status_code"] = rp.StatusCode
+		rolePermissionsMap["status_code"] = rp.StatusCode
 	}
 	if rp.Message != "" {
-		rolePermissionMap["message"] = rp.Message
+		rolePermissionsMap["message"] = rp.Message
 	}
 
-	return rolePermissionMap
+	return rolePermissionsMap
 }
 
 type Permission struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	PermissionID int    `json:"id,omitempty"`
+	StatusCode   int    `json:"status_code,omitempty"`
+	Message      string `json:"message,omitempty"`
 }
 
-func (p *Permission) GetMap() map[string]interface{} {
-	return map[string]interface{}{
+func (p *Permission) ToMap() map[string]interface{} {
+	permissionMap := map[string]interface{}{
 		"name":        p.Name,
 		"description": p.Description,
 	}
+
+	if p.PermissionID != 0 {
+		permissionMap["id"] = p.PermissionID
+	}
+	if p.StatusCode != 0 {
+		permissionMap["status_code"] = p.StatusCode
+	}
+	if p.Message != "" {
+		permissionMap["message"] = p.Message
+	}
+
+	return permissionMap
 }
 
-func main() {
-	// Usage example:
-	user := User{
-		Email:     "test@example.com",
-		Password:  "password",
-		FirstName: "John",
-		LastName:  "Doe",
-		UserID:    1,
-	}
-	userMap := user.ToMap()
-	fmt.Println(userMap)
+// func main() {
+// 	user := User{
+// 		Email:      "example@example.com",
+// 		Password:   "password123",
+// 		FirstName:  "John",
+// 		LastName:   "Doe",
+// 		UserID:     1,
+// 		StatusCode: 200,
+// 		Message:    "OK",
+// 	}
 
-	role := Role{
-		Name:        "Admin",
-		Description: "Administrator role",
-		RoleID:      123,
-	}
-	roleMap := role.GetMap()
-	fmt.Println(roleMap)
-}
+// 	userDict := user.ToDict()
+// 	fmt.Println(userDict)
+
+// 	role := Role{
+// 		Name:        "Admin",
+// 		Description: "Administrator",
+// 		RoleID:      1,
+// 		StatusCode:  200,
+// 		Message:     "OK",
+// 	}
+
+// 	roleDict := role.GetDict()
+// 	fmt.Println(roleDict)
+// }
