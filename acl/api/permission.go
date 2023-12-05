@@ -16,7 +16,7 @@ type Permission struct {
 	Message     string
 }
 
-func (p *Permission) GetDict() map[string]interface{} {
+func (p *Permission) ToMap() map[string]interface{} {
 	permissionDict := map[string]interface{}{
 		"name":        p.Name,
 		"description": p.Description,
@@ -47,7 +47,7 @@ func (p *PermissionAPI) CreatePermission(name, description string) Permission {
 
 	permissionObj := Permission{Name: name, Description: description}
 
-	payload, _ := json.Marshal(permissionObj.GetDict())
+	payload, _ := json.Marshal(permissionObj.ToMap())
 
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	for key, value := range p.Headers {
