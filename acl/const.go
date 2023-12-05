@@ -11,23 +11,23 @@ const (
 	ApplicationJSONMediaType = "application/json"
 )
 
-var headers = map[string]string{
+var Headers = map[string]string{
 	ContentTypeHeader: ApplicationJSONMediaType,
 	"Cookie":          fmt.Sprintf("csrftoken=%s", CSRFToken),
 }
 
 // User API endpoints
 var (
-	GetUserByIDAPI     = fmt.Sprintf("%s/get-user-by-id", BaseURL)
-	GetUserRoleByID    = fmt.Sprintf("%s/get-user-roles-by-user-id", BaseURL)
-	CreateUserAPI      = fmt.Sprintf("%s/create-user", BaseURL)
-	CreateUserRoleAPI  = fmt.Sprintf("%s/create-user-role", BaseURL)
+	GetUserByIDAPI    = fmt.Sprintf("%s/get-user-by-id", BaseURL)
+	GetUserRoleByID   = fmt.Sprintf("%s/get-user-roles-by-user-id", BaseURL)
+	CreateUserAPI     = fmt.Sprintf("%s/create-user", BaseURL)
+	CreateUserRoleAPI = fmt.Sprintf("%s/create-user-role", BaseURL)
 )
 
 // Auth API endpoints
 var (
-	UserLoginAPI            = fmt.Sprintf("%s/user-login", BaseURL)
-	UserSignupAPI           = fmt.Sprintf("%s/create-user-role", BaseURL)
+	UserLoginAPI           = fmt.Sprintf("%s/user-login", BaseURL)
+	UserSignupAPI          = fmt.Sprintf("%s/create-user-role", BaseURL)
 	UserRolePermissionsAPI = fmt.Sprintf("%s/get-user-with-role-permissions", BaseURL)
 )
 
