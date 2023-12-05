@@ -11,7 +11,9 @@ const (
 	ApplicationJSONMediaType = "application/json"
 )
 
-var Headers = map[string]string{
+type Headers map[string]string;
+
+var HeadersMap = Headers{
 	ContentTypeHeader: ApplicationJSONMediaType,
 	"Cookie":          fmt.Sprintf("csrftoken=%s", CSRFToken),
 }

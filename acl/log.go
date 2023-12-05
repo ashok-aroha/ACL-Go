@@ -1,23 +1,30 @@
 package acl
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type Log struct{}
 
-type Obj struct {
-	StatusCode int
-	Message    string
+func (l *Log) PrintLog(obj interface{}) {
+	val := reflect.ValueOf(obj)
+	if val.Kind() != reflect.Struct {
+		fmt.Println("Invalid type")
+		return
+	}
+
+	statusCodeField := val.FieldByName("StatusCode")
+	messageField := val.FieldByName("Message")
+
+	if !statusCodeField.IsValid() || !messageField.IsValid() {
+		fmt.Println("Invalid type")
+		return
+	}
+
+	statusCode := statusCodeField.Int()
+	message := messageField.String()
+
+	fmt.Println("Status Code:", statusCode)
+	fmt.Println("Message:", message)
 }
-
-func (l Log) PrintLog(obj Obj) {
-	fmt.Println("Status Code:", obj.StatusCode)
-	fmt.Println("Message:", obj.Message)
-}
-
-// Example
-
-// func main() {
-//      log := Log{}
-//      obj := Obj{StatusCode: 200, Message: "OK"}
-//      log.PrintLog(obj)
-// # }

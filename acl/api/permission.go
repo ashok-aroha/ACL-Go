@@ -3,61 +3,77 @@ package api
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	acl "github.com/ashok-aroha/ACL-Go/acl"
 )
 
+type Permission struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ID          int    `json:"id,omitempty"`
+	StatusCode  int
+	Message     string
+}
+
+func (p *Permission) GetDict() map[string]interface{} {
+	permissionDict := map[string]interface{}{
+		"name":        p.Name,
+		"description": p.Description,
+	}
+
+	if p.ID != 0 {
+		permissionDict["id"] = p.ID
+	}
+
+	if p.StatusCode != 0 {
+		permissionDict["status_code"] = p.StatusCode
+	}
+
+	if p.Message != "" {
+		permissionDict["message"] = p.Message
+	}
+
+	return permissionDict
+}
+
 type PermissionAPI struct {
-	Permission acl.Permission
+	Log     acl.Log
+	Headers acl.Headers
 }
 
-func NewPermissionAPI(name, description string) *PermissionAPI {
-	return &PermissionAPI{
-		Permission: acl.Permission{
-			Name:        name,
-			Description: description,
-		},
-	}
-}
+func (p *PermissionAPI) CreatePermission(name, description string) Permission {
+	url := acl.CreatePermissionAPI // Replace with your API URL
 
-func (p *PermissionAPI) CreatePermission() map[string]interface{} {
-	url := acl.CreatePermissionAPI
-	headers := acl.Headers
+	permissionObj := Permission{Name: name, Description: description}
 
-	payload, _ := json.Marshal(p.Permission)
+	payload, _ := json.Marshal(permissionObj.GetDict())
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return nil
-	}
-
-	for key, value := range headers {
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	for key, value := range p.Headers {
 		req.Header.Set(key, value)
 	}
 
 	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error making request:", err)
-		return nil
-	}
+	resp, _ := client.Do(req)
+
 	defer resp.Body.Close()
 
-	var result map[string]interface{}
-	err = json.NewDecoder(resp.Body).Decode(&result)
-	if err != nil {
-		fmt.Println("Error decoding response:", err)
-		return nil
-	}
-
 	if resp.StatusCode == http.StatusOK {
-		fmt.Println("Permission Created!!")
-		return result
+
+		var permissionRes Permission
+		json.NewDecoder(resp.Body).Decode(&permissionRes)
+
+		permissionObj.ID = permissionRes.ID
+		//TODO: API Message has writtent custom message need to be udpated into server side
+		permissionObj.Message = "Permission Creation Successful!!"
+	} else {
+		permissionObj.Message = "Permission Creation Failed!!"
 	}
 
-	fmt.Println("Permission Creation Failed!!")
-	return result
+	permissionObj.StatusCode = resp.StatusCode
+
+	p.Log.PrintLog(permissionObj)
+
+	return permissionObj
 }
