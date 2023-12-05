@@ -11,7 +11,7 @@ const (
 	ApplicationJSONMediaType = "application/json"
 )
 
-type Headers map[string]string;
+type Headers map[string]string
 
 var HeadersMap = Headers{
 	ContentTypeHeader: ApplicationJSONMediaType,
@@ -20,10 +20,10 @@ var HeadersMap = Headers{
 
 // User API endpoints
 var (
-	GetUserByIDAPI    = fmt.Sprintf("%s/get-user-by-id", BaseURL)
-	GetUserRoleByID   = fmt.Sprintf("%s/get-user-roles-by-user-id", BaseURL)
-	CreateUserAPI     = fmt.Sprintf("%s/create-user", BaseURL)
-	CreateUserRoleAPI = fmt.Sprintf("%s/create-user-role", BaseURL)
+	GET_USER_BY_ID_API      = fmt.Sprintf("%s/get-user-by-id", BaseURL)
+	GET_USER_ROLE_BY_ID_API = fmt.Sprintf("%s/get-user-roles-by-user-id", BaseURL)
+	CREATE_USER_API         = fmt.Sprintf("%s/create-user", BaseURL)
+	CREATE_USER_ROLE_API    = fmt.Sprintf("%s/create-user-role", BaseURL)
 )
 
 // Auth API endpoints
@@ -35,11 +35,11 @@ var (
 
 // Role API endpoints
 var (
-	CreateRoleAPI         = fmt.Sprintf("%s/create-role", BaseURL)
-	CreateRolePermissions = fmt.Sprintf("%s/create-role-permissions", BaseURL)
+	CREATE_ROLE_API             = fmt.Sprintf("%s/create-role", BaseURL)
+	CREATE_ROLE_PERMISSIONS_API = fmt.Sprintf("%s/create-role-permissions", BaseURL)
 )
 
 // Permission API endpoints
 var (
-	CreatePermissionAPI = fmt.Sprintf("%s/create-permission", BaseURL)
+	CREATE_PERMISSION_API = fmt.Sprintf("%s/create-permission", BaseURL)
 )

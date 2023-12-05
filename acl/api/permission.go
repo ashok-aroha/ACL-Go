@@ -38,12 +38,11 @@ func (p *Permission) ToMap() map[string]interface{} {
 }
 
 type PermissionAPI struct {
-	Log     acl.Log
 	Headers acl.Headers
 }
 
 func (p *PermissionAPI) CreatePermission(name, description string) Permission {
-	url := acl.CreatePermissionAPI // Replace with your API URL
+	url := acl.CREATE_PERMISSION_API // Replace with your API URL
 
 	permissionObj := Permission{Name: name, Description: description}
 
@@ -72,8 +71,6 @@ func (p *PermissionAPI) CreatePermission(name, description string) Permission {
 	}
 
 	permissionObj.StatusCode = resp.StatusCode
-
-	p.Log.PrintLog(permissionObj)
 
 	return permissionObj
 }
