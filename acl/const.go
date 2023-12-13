@@ -28,9 +28,9 @@ var (
 
 // Auth API endpoints
 var (
-	UserLoginAPI           = fmt.Sprintf("%s/user-login", BaseURL)
-	UserSignupAPI          = fmt.Sprintf("%s/create-user-role", BaseURL)
-	UserRolePermissionsAPI = fmt.Sprintf("%s/get-user-with-role-permissions", BaseURL)
+	USER_LOGIN_API            = fmt.Sprintf("%s/user-login", BaseURL)
+	USER_SIGNUP_API           = fmt.Sprintf("%s/create-user-role", BaseURL)
+	USER_ROLE_PERMISSIONS_API = fmt.Sprintf("%s/get-user-with-role-permissions", BaseURL)
 )
 
 // Role API endpoints
