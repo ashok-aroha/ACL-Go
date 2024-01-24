@@ -103,11 +103,11 @@ func (aa *AuthAPI) Login(email, password string) Auth {
 		}
 
 		var userID string
-		switch id.(type) {
+		switch id := id.(type) {
 		case string:
-			userID = id.(string)
+			userID = id
 		case float64:
-			userID = fmt.Sprintf("%.0f", id.(float64))
+			userID = fmt.Sprintf("%.0f", id)
 		default:
 			fmt.Println("ID field is not a recognized type")
 			return Auth{}
@@ -140,7 +140,11 @@ func (aa *AuthAPI) IsAuthorized(roles, permissions []string, userID string) bool
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return false
+	}
 
 	defer resp.Body.Close()
 

@@ -3,6 +3,7 @@ package api
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	acl "github.com/ashok-aroha/ACL-Go/acl"
@@ -54,7 +55,11 @@ func (p *PermissionAPI) CreatePermission(name, description string) Permission {
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return Permission{}
+	}
 
 	defer resp.Body.Close()
 

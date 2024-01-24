@@ -84,7 +84,11 @@ func (ra *RoleAPI) CreateRole(name, description string) Role {
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return Role{}
+	}
 
 	defer resp.Body.Close()
 
@@ -119,7 +123,11 @@ func (ra *RoleAPI) CreateRolePermissions(roleID int, rolePermissions []int) Role
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return RolePermission{}
+	}
 
 	defer resp.Body.Close()
 

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 
 	// "io/ioutil"
 	"net/http"
@@ -90,7 +90,11 @@ func (ua *UserAPI) GetUserByID(userID int) User {
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return User{}
+	}
 
 	defer resp.Body.Close()
 
@@ -123,7 +127,11 @@ func (ua *UserAPI) GetUserRoleByID(userID int) UserRole {
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return UserRole{}
+	}
 
 	defer resp.Body.Close()
 
@@ -168,7 +176,11 @@ func (ua *UserAPI) CreateUser(email, password, firstName, lastName string) User 
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return User{}
+	}
 
 	defer resp.Body.Close()
 
@@ -208,11 +220,15 @@ func (ua *UserAPI) CreateUserRole(userID int, userRoles []int) UserRole {
 	}
 
 	client := &http.Client{}
-	resp, _ := client.Do(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making the request:", err)
+		return UserRole{}
+	}
 
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -2,44 +2,47 @@ package acl
 
 import (
 	"fmt"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 const (
-	BaseURL                  = "http://127.0.0.1:8000"
-	CSRFToken                = "OVwpp5rokWAkZ6OHFBXSKxoctE0uLFPl"
 	ContentTypeHeader        = "Content-Type"
 	ApplicationJSONMediaType = "application/json"
 )
+
+var _ = godotenv.Load()
 
 type Headers map[string]string
 
 var HeadersMap = Headers{
 	ContentTypeHeader: ApplicationJSONMediaType,
-	"Cookie":          fmt.Sprintf("csrftoken=%s", CSRFToken),
+	"Cookie":          fmt.Sprintf("csrftoken=%s", os.Getenv("CSRFToken")),
 }
 
 // User API endpoints
 var (
-	GET_USER_BY_ID_API      = fmt.Sprintf("%s/get-user-by-id", BaseURL)
-	GET_USER_ROLE_BY_ID_API = fmt.Sprintf("%s/get-user-roles-by-user-id", BaseURL)
-	CREATE_USER_API         = fmt.Sprintf("%s/create-user", BaseURL)
-	CREATE_USER_ROLE_API    = fmt.Sprintf("%s/create-user-role", BaseURL)
+	GET_USER_BY_ID_API      = os.Getenv("GET_USER_BY_ID_API")
+	GET_USER_ROLE_BY_ID_API = os.Getenv("GET_USER_ROLE_BY_ID_API")
+	CREATE_USER_API         = os.Getenv("CREATE_USER_API")
+	CREATE_USER_ROLE_API    = os.Getenv("CREATE_USER_ROLE_API")
 )
 
 // Auth API endpoints
 var (
-	USER_LOGIN_API            = fmt.Sprintf("%s/user-login", BaseURL)
-	USER_SIGNUP_API           = fmt.Sprintf("%s/create-user-role", BaseURL)
-	USER_ROLE_PERMISSIONS_API = fmt.Sprintf("%s/get-user-with-role-permissions", BaseURL)
+	USER_LOGIN_API            = os.Getenv("USER_LOGIN_API")
+	USER_SIGNUP_API           = os.Getenv("USER_SIGNUP_API")
+	USER_ROLE_PERMISSIONS_API = os.Getenv("USER_ROLE_PERMISSIONS_API")
 )
 
 // Role API endpoints
 var (
-	CREATE_ROLE_API             = fmt.Sprintf("%s/create-role", BaseURL)
-	CREATE_ROLE_PERMISSIONS_API = fmt.Sprintf("%s/create-role-permissions", BaseURL)
+	CREATE_ROLE_API             = os.Getenv("CREATE_ROLE_API")
+	CREATE_ROLE_PERMISSIONS_API = os.Getenv("CREATE_ROLE_PERMISSIONS_API")
 )
 
 // Permission API endpoints
 var (
-	CREATE_PERMISSION_API = fmt.Sprintf("%s/create-permission", BaseURL)
+	CREATE_PERMISSION_API = os.Getenv("CREATE_PERMISSION_API")
 )
